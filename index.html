@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="logo.png">
+<title>Rajeev Video Cable</title>
+<meta name="description" content="Rajeev Video Cable: digital cable TV with HD channels, set-top boxes and affordable monthly packs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style id="site-css">
+/* Layout: full-width colour bands, each with a 1180px inner wrapper; site, chatbot and admin all render from one JSON content block */
+:root{
+  --bg:#f5f7fb; --surface:#ffffff; --ink:#0f1a33; --muted:#55607a; --line:#dde3ee;
+  --band:#0d1b3d; --band-ink:#eef2fb; --band-muted:#a9b5d3;
+  --accent:#d9141b; --accent-ink:#ffffff; --accent-soft:#fde8e8; --accent-text:#c0111a;
+  --signal:#1f9d61; --screen:#071029; --warn-bg:#fff4d6; --warn-ink:#6b4a00;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0a1122; --surface:#111b33; --ink:#e8edf8; --muted:#9aa6c2; --line:#22304f;
+  --band:#060c1c; --band-ink:#eef2fb; --band-muted:#9aa6c2;
+  --accent:#ff4d52; --accent-ink:#1c0002; --accent-soft:#2e1519; --accent-text:#ff7a7e;
+  --signal:#3fcf8a; --screen:#030817; --warn-bg:#3a2e0d; --warn-ink:#ffd978; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a1122; --surface:#111b33; --ink:#e8edf8; --muted:#9aa6c2; --line:#22304f;
+  --band:#060c1c; --band-ink:#eef2fb; --band-muted:#9aa6c2;
+  --accent:#ff4d52; --accent-ink:#1c0002; --accent-soft:#2e1519; --accent-text:#ff7a7e;
+  --signal:#3fcf8a; --screen:#030817; --warn-bg:#3a2e0d; --warn-ink:#ffd978; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--band)}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text)}
+.hero .eyebrow,.stb .eyebrow{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 .98rem/1 var(--body);padding:14px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:transform .15s, background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-ghost{background:transparent;color:var(--band-ink);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--band-ink) 40%,transparent)}
+.btn-line{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn-sm{padding:10px 14px;font-size:.88rem}
+
+/* Top strip + nav */
+.strip{background:var(--accent);color:var(--accent-ink);font-size:.86rem;font-weight:600}
+.strip .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:space-between;padding-block:8px}
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--band);color:var(--band-ink);border-bottom:1px solid color-mix(in srgb,var(--band-ink) 12%,transparent)}
+header.nav .wrap{display:flex;align-items:center;gap:24px;padding-block:12px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+.logo-mark{flex:none;width:46px;height:46px;border-radius:10px;background:#ffffff;display:grid;place-items:center;padding:4px}
+.logo-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.logo-text{font:700 1.15rem/1.05 var(--display)}
+.logo-text small{display:block;font:500 .7rem/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--band-muted)}
+nav.links{display:flex;gap:22px;margin-left:auto;font-weight:500;font-size:.95rem}
+nav.links a{text-decoration:none;color:var(--band-muted)}
+nav.links a:hover{color:var(--band-ink)}
+.nav .btn{padding:11px 18px;font-size:.9rem;flex:none}
+.menu-btn{display:none;flex:none;width:44px;height:44px;border-radius:10px;border:1px solid color-mix(in srgb,var(--band-ink) 25%,transparent);background:transparent;color:var(--band-ink);cursor:pointer;place-items:center}
+.menu-btn svg{width:22px;height:22px}
+@media (max-width:1000px){
+  .menu-btn{display:grid}
+  header.nav .wrap{gap:12px}
+  .nav .btn{margin-left:auto}
+  nav.links{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;background:var(--band);border-bottom:1px solid color-mix(in srgb,var(--band-ink) 14%,transparent);padding:8px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));box-shadow:0 20px 30px -20px rgba(0,0,0,.6)}
+  nav.links.open{display:flex}
+  nav.links a{padding:14px 4px;border-bottom:1px solid color-mix(in srgb,var(--band-ink) 10%,transparent);font-size:1.02rem;color:var(--band-ink)}
+}
+@media (max-width:480px){.logo-text{font-size:1rem}.logo-text small{display:none}.nav .btn{padding:10px 14px;font-size:.84rem}.logo-mark{width:40px;height:40px}}
+@media (max-width:360px){.nav .btn{display:none}}
+
+/* Hero */
+.hero{background:var(--band);color:var(--band-ink);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-block:64px 72px}
+.hero h1{font-size:clamp(2.3rem,5.2vw,4rem);font-weight:800;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lead{margin-top:18px;font-size:1.12rem;color:var(--band-muted);max-width:52ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-facts{display:flex;flex-wrap:wrap;gap:28px;margin-top:36px;padding-top:24px;border-top:1px solid color-mix(in srgb,var(--band-ink) 14%,transparent)}
+.hero-facts b{display:block;font:800 1.7rem/1 var(--display);color:var(--band-ink)}
+.hero-facts span{font-size:.85rem;color:var(--band-muted)}
+@media (max-width:1000px){.hero .wrap{grid-template-columns:1fr;gap:40px;padding-block:44px 52px}.tv{width:100%;max-width:600px;justify-self:center}}
+@media (max-width:480px){.hero .cta .btn{flex:1 1 100%}.hero-facts{gap:20px}.hero-facts b{font-size:1.4rem}.hero .lead{font-size:1.02rem}}
+
+.tv{position:relative;max-width:100%;min-width:0}
+.tv-frame{background:#1a1f2b;border-radius:18px;padding:12px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.screen{background:var(--screen);border-radius:10px;aspect-ratio:16/10;max-width:100%;overflow:hidden;position:relative;color:#e8edf8}
+.screen-now{position:absolute;inset:0 0 auto 0;height:52%;padding:18px 20px;background:
+  radial-gradient(120% 90% at 80% 10%, rgba(255,40,48,.5), transparent 60%),
+  radial-gradient(90% 80% at 10% 100%, rgba(60,110,255,.35), transparent 60%), #0c1a3f;display:flex;flex-direction:column;justify-content:space-between}
+.screen-now .tag{display:inline-flex;align-items:center;gap:6px;font:700 .68rem/1 var(--mono);letter-spacing:.08em;background:rgba(0,0,0,.4);padding:6px 8px;border-radius:5px;align-self:flex-start}
+.screen-now .tag i{width:7px;height:7px;border-radius:50%;background:#ff4d4d;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.screen-now h3{font-size:clamp(1rem,2.2vw,1.4rem)}
+.screen-now p{font:500 .75rem/1.3 var(--mono);color:#c3cce3}
+.epg{position:absolute;inset:auto 0 0 0;height:48%;display:grid;grid-auto-rows:1fr;font:500 clamp(.6rem,1.2vw,.74rem)/1.2 var(--mono)}
+.epg-row{display:grid;grid-template-columns:44px 92px 1fr 1fr;border-top:1px solid #1d2a4d;align-items:center}
+.epg-row > *{padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.epg-row .lcn{color:#ff6b70;font-weight:700}
+.epg-row .ch{color:#fff;font-weight:700}
+.epg-row .on{background:rgba(255,60,66,.16);height:100%;display:flex;align-items:center;border-left:2px solid #ff4d52}
+.epg-row.sel{background:#13234f}
+.tv-stand{width:30%;height:14px;margin:0 auto;background:#1a1f2b;border-radius:0 0 10px 10px}
+.remote-hint{position:absolute;right:-6px;bottom:28px;background:#ffffff;color:#0f1a33;font:700 .78rem/1.2 var(--body);padding:10px 14px;border-radius:12px;box-shadow:0 10px 24px -10px rgba(0,0,0,.6);max-width:60%}
+@media (max-width:520px){.epg-row{grid-template-columns:36px 74px 1fr}.epg-row > :last-child{display:none}.remote-hint{right:6px}.screen-now{padding:12px 14px}}
+@media (max-width:400px){.remote-hint{display:none}}
+
+/* Generic sections */
+section.block{padding-block:clamp(52px,8vw,80px)}
+@media (max-width:600px){.sec-head{margin-bottom:24px}.toggle{width:100%}.toggle button{flex:1;padding:10px 8px}}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:36px}
+.sec-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;letter-spacing:-.015em;margin-top:8px}
+.sec-head p{color:var(--muted);max-width:52ch}
+
+/* Features */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.feat{background:var(--surface);padding:28px;display:flex;flex-direction:column;gap:10px}
+.feat svg{width:34px;height:34px;color:var(--accent)}
+.feat h3{font-size:1.15rem;font-weight:700}
+.feat p{color:var(--muted);font-size:.96rem}
+@media (max-width:860px){.features{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.features{grid-template-columns:1fr}}
+
+/* Packs */
+#packs{background:var(--surface);border-block:1px solid var(--line)}
+.toggle{display:inline-flex;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:4px}
+.toggle button{font:600 .9rem/1 var(--body);border:0;background:transparent;color:var(--muted);padding:10px 16px;border-radius:999px;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px 18px}
+.pack{border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:16px;background:var(--bg);position:relative}
+.pack.pop{background:var(--band);color:var(--band-ink);border-color:var(--band)}
+.pack.pop .p-sub,.pack.pop li{color:var(--band-muted)}
+.pack .badge{position:absolute;top:-12px;left:24px;background:var(--accent);color:var(--accent-ink);font:700 .72rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border-radius:999px}
+.pack h3{font-size:1.25rem}
+.p-sub{font-size:.88rem;color:var(--muted);margin-top:4px}
+.price{font:800 2.3rem/1 var(--display);font-variant-numeric:tabular-nums}
+.price small{font:500 .85rem var(--body);opacity:.75}
+.price-note{font-size:.78rem;opacity:.7;margin-top:6px}
+.pack ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:.93rem;color:var(--muted)}
+.pack li{display:flex;gap:8px}
+.pack li::before{content:"";flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;background:var(--signal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.2 2.2 4.8-4.8' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.pack .chcount{font:700 .8rem/1 var(--mono)}
+.pack .btn{margin-top:auto}
+.pack:not(.pop) .btn{background:var(--ink);color:var(--bg)}
+.fineprint{margin-top:22px;font-size:.84rem;color:var(--muted)}
+
+/* Channel guide */
+.genres{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.genres button{font:600 .88rem/1 var(--body);padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.genres button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.search{display:flex;gap:10px;margin-bottom:20px}
+.search input{flex:1;min-width:0}
+.guide{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.chan{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.chan .num{font:700 .82rem/1 var(--mono);color:var(--accent-text);background:var(--accent-soft);padding:7px 8px;border-radius:7px;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
+.chan .nm{font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chan .g{font-size:.76rem;color:var(--muted)}
+.chan .hd{margin-left:auto;font:700 .66rem/1 var(--mono);border:1px solid var(--muted);color:var(--muted);padding:4px 5px;border-radius:4px}
+.guide-empty{color:var(--muted);padding:24px 0}
+
+/* STB */
+.stb{background:var(--band);color:var(--band-ink)}
+.stb .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.stb h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;margin-top:8px}
+.stb p.lead{color:var(--band-muted);margin-top:14px;max-width:50ch}
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:color-mix(in srgb,var(--band-ink) 14%,transparent);border-radius:var(--r);overflow:hidden;margin:28px 0 0}
+.spec div{background:var(--band);padding:16px 18px}
+.spec dt{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--band-muted)}
+.spec dd{margin:4px 0 0;font:700 1.05rem var(--display)}
+.stb .fineprint{color:var(--band-muted)}
+.box-art{display:grid;place-items:center}
+.box-art svg{width:100%;max-width:480px;height:auto}
+@media (max-width:860px){.stb .wrap{grid-template-columns:1fr}}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+.step{border-top:3px solid var(--accent);padding-top:18px}
+.step b{font:700 .8rem/1 var(--mono);color:var(--accent-text)}
+.step h3{font-size:1.12rem;margin-top:10px}
+.step p{color:var(--muted);font-size:.94rem;margin-top:6px}
+
+/* Connect form + pay */
+#connect{background:var(--surface);border-top:1px solid var(--line)}
+.connect{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+.card{border:1px solid var(--line);border-radius:var(--r);padding:28px;background:var(--bg);min-width:0}
+.card h3{font-size:1.4rem}
+.card > p{color:var(--muted);margin-top:6px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+label{display:flex;flex-direction:column;gap:6px;font-size:.86rem;font-weight:600}
+input,select,textarea{font:500 1rem var(--body);padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+textarea{resize:vertical;min-height:80px;line-height:1.45}
+.full{grid-column:1/-1}
+#leadForm .btn{margin-top:20px}
+.ok{margin-top:16px;padding:14px 16px;border-radius:10px;background:color-mix(in srgb,var(--signal) 16%,transparent);border:1px solid var(--signal);font-size:.94rem}
+.ok.bad{background:var(--accent-soft);border-color:var(--accent)}
+.pay{display:flex;flex-direction:column;gap:14px}
+.pay .card{display:flex;flex-direction:column;gap:12px}
+.pay .card p{color:var(--muted);white-space:pre-line}
+.contact-line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.contact-line span{color:var(--muted);font-size:.86rem}
+.contact-line b{font:700 1rem var(--mono);overflow-wrap:anywhere}
+.copy{font:600 .8rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 10px;border-radius:8px;cursor:pointer}
+@media (max-width:900px){.connect{grid-template-columns:1fr}}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq{max-width:820px}
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{cursor:pointer;font:700 1.08rem var(--display);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent-text);font-size:1.4rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin-top:10px;max-width:68ch;white-space:pre-line}
+
+footer{background:var(--band);color:var(--band-muted);font-size:.9rem}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;padding-block:52px calc(28px + 64px)}
+footer h4{color:var(--band-ink);font:700 .95rem var(--display);margin:0 0 12px}
+footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--band-ink)}
+footer .logo-text{color:var(--band-ink)}
+.legal{grid-column:1/-1;border-top:1px solid color-mix(in srgb,var(--band-ink) 12%,transparent);padding-top:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:.82rem}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr 1fr}footer .wrap > :first-child{grid-column:1/-1}}
+.quick{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.quick .btn{flex:1 1 180px}
+@media (max-width:600px){.card{padding:20px}.stb .wrap{gap:28px}.spec dd{font-size:.98rem}}
+
+/* Chatbot */
+.chat-fab{position:fixed;z-index:80;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:14px 20px 14px 16px;font:700 .95rem var(--body);cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,.45)}
+.chat-fab svg{width:22px;height:22px}
+.chat-panel{position:fixed;z-index:81;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(410px,calc(100vw - 32px));height:min(640px,calc(100dvh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)));background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden}
+@media (max-width:560px){.chat-panel{inset:0;width:100%;height:100%;max-height:none;border-radius:0;border:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}.chat-fab span{display:none}.chat-fab{padding:16px}}
+.chat-head{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--band);color:var(--band-ink);flex:none}
+.chat-head .logo-mark{width:38px;height:38px}
+.chat-head b{display:block;font:700 1rem var(--display)}
+.chat-head small{color:var(--band-muted);font-size:.78rem;display:flex;align-items:center;gap:6px}
+.chat-head small i{width:8px;height:8px;border-radius:50%;background:var(--signal)}
+.chat-close{margin-left:auto;background:transparent;border:0;color:var(--band-ink);font-size:1.6rem;line-height:1;cursor:pointer;padding:6px 10px;border-radius:8px}
+.chat-log{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.msg{max-width:88%;padding:10px 14px;border-radius:16px;font-size:.94rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.bot{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px;align-self:flex-end}
+.msg.typing{color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 14px 2px;background:var(--surface);flex:none;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;font:600 .82rem var(--body);border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:8px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.chips button:hover{border-color:var(--accent)}
+.chat-form{display:flex;gap:8px;padding:10px 14px 12px;background:var(--surface);flex:none}
+.chat-form input{flex:1;min-width:0;padding:11px 14px;border-radius:999px}
+.chat-form button{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;display:grid;place-items:center}
+.chat-form button svg{width:18px;height:18px}
+/* chat widgets: plan carousel + forms */
+.w{align-self:stretch;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.w-period{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px}
+.w-period button{flex:1;font:600 .78rem var(--body);border:0;background:transparent;color:var(--muted);padding:8px 4px;border-radius:999px;cursor:pointer}
+.w-period button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.w-track{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.w-card{flex:0 0 82%;scroll-snap-align:center;border:1.5px solid var(--line);border-radius:14px;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:8px}
+.w-card.pop{border-color:var(--accent)}
+.w-card.sel{border-color:var(--signal);box-shadow:0 0 0 3px color-mix(in srgb,var(--signal) 25%,transparent)}
+.w-card .tag{align-self:flex-start;font:700 .66rem var(--body);letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:4px 8px;border-radius:999px}
+.w-card h4{margin:0;font:700 1.08rem var(--display)}
+.w-card .p{font:800 1.6rem/1 var(--display);font-variant-numeric:tabular-nums}
+.w-card .p small{font:500 .78rem var(--body);color:var(--muted)}
+.w-card .n{font-size:.76rem;color:var(--muted)}
+.w-card ul{margin:0;padding-left:18px;font-size:.84rem;color:var(--muted)}
+.w-card .btn{padding:11px 14px;font-size:.88rem;margin-top:auto}
+.w-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.w-nav button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:1rem}
+.w-dots{display:flex;gap:6px}
+.w-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.w-dots i.on{background:var(--accent)}
+.w h4.t{margin:0;font:700 1rem var(--display)}
+.w form{display:flex;flex-direction:column;gap:10px}
+.w label{font-size:.8rem;gap:4px}
+.w input,.w select,.w textarea{font-size:.95rem;padding:10px 12px}
+.w textarea{min-height:64px}
+.w .req{color:var(--accent-text)}
+.w .calc{font:700 1.1rem var(--display);padding:8px 0}
+.w .upi{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--accent-soft);border-radius:10px;padding:10px 12px;font-size:.86rem}
+.w .upi b{font-family:var(--mono)}
+.w .err{color:var(--accent-text);font-size:.84rem;font-weight:600}
+.w .btn{width:100%}
+.w-done{border-color:var(--signal)}
+.w-done .ref{font:700 1.2rem var(--mono);color:var(--ink)}
+.w-done dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.84rem}
+.w-done dt{color:var(--muted)}
+.w-done dd{margin:0;overflow-wrap:anywhere}
+
+/* Preview bar + toast */
+.preview-bar{position:fixed;z-index:85;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 200px);display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--ink);color:var(--bg);padding:10px 12px 10px 16px;border-radius:14px;font-weight:600;font-size:.9rem;box-shadow:0 14px 30px -10px rgba(0,0,0,.5)}
+@media (max-width:640px){.preview-bar{max-width:none;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+.toast{position:fixed;z-index:90;left:50%;transform:translateX(-50%);top:calc(16px + env(safe-area-inset-top,0px));background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;box-shadow:0 14px 30px -10px rgba(0,0,0,.5);max-width:calc(100% - 32px)}
+
+/* Admin */
+.adm-top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--band);color:var(--band-ink)}
+.adm-top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding-block:12px}
+.adm-top .actions{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.adm-top .btn-line{background:transparent;color:var(--band-ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--band-ink) 30%,transparent)}
+.adm-status{font-size:.86rem;color:var(--band-muted);display:flex;align-items:center;gap:8px}
+.adm-status i{width:9px;height:9px;border-radius:50%;background:var(--signal)}
+.adm-status.dirty i{background:#f5a524}
+.adm-body{display:grid;grid-template-columns:220px 1fr;gap:28px;padding-block:28px 80px;align-items:start}
+.adm-tabs{display:flex;flex-direction:column;gap:4px;position:sticky;top:calc(90px + env(safe-area-inset-top,0px))}
+.adm-tabs button{text-align:left;font:600 .94rem var(--body);background:transparent;border:0;color:var(--muted);padding:10px 12px;border-radius:10px;cursor:pointer}
+.adm-tabs button[aria-current="true"]{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.adm-panel{min-width:0;display:flex;flex-direction:column;gap:18px}
+.adm-panel > h2{font-size:1.7rem}
+.adm-panel > .help{color:var(--muted);margin-top:-8px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fgrid .wide{grid-column:1/-1}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.fbox > h3{font-size:1.05rem}
+.litem{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--bg);display:flex;flex-direction:column;gap:12px}
+.litem-head{display:flex;align-items:center;gap:8px;font:700 .82rem var(--mono);color:var(--muted)}
+.litem-head .sp{margin-left:auto}
+.mini{font:600 .78rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 9px;border-radius:8px;cursor:pointer}
+.mini.del{color:var(--accent-text)}
+.chk{flex-direction:row;align-items:center;gap:10px;font-weight:600}
+.chk input{width:20px;height:20px}
+.hint{font-weight:500;color:var(--muted);font-size:.8rem}
+.imgfield{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.imgfield .logo-mark{width:72px;height:72px;border:1px solid var(--line)}
+.notice{padding:14px 16px;border-radius:12px;background:var(--warn-bg);color:var(--warn-ink);font-size:.92rem}
+.notice.ok{background:color-mix(in srgb,var(--signal) 16%,transparent);color:var(--ink)}
+.notice.bad{background:var(--accent-soft);color:var(--ink);border:1px solid var(--accent)}
+.login{min-height:100%;display:grid;place-items:center;padding-block:60px}
+.login .card{width:min(420px,100%);background:var(--surface);display:flex;flex-direction:column;gap:16px}
+.login .logo{color:var(--ink)}
+.login .logo-mark{border:1px solid var(--line)}
+@media (max-width:820px){.adm-body{grid-template-columns:1fr}.adm-tabs{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}.adm-tabs button{white-space:nowrap}.fgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<!-- ===== SETTINGS: paste your Google Apps Script Web app URL between the quotes ===== -->
+<script>window.RVC_CONFIG={apiUrl:"https://script.google.com/macros/s/AKfycbyCXu28-iE-3Rj0cpNKvphRi0oCTHe8CbNlV2TcLLwfY2fqeaE8eZqvaB9KXaHtv8uW8Q/exec"};</script>
+<div id="app"></div>
+<div id="chat"></div>
+<script type="application/json" id="site-data">{"brand": {"name": "Rajeev Video Cable", "tagline": "Digital Cable TV", "logo": "data:image/png;base64,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", "description": "Rajeev Video Cable: digital cable TV with HD channels, set-top boxes and affordable monthly packs."}, "strip": {"left": "New connection? Installation in 24–48 hours in our service area"}, "contact": {"helpline": "+91 98XXX XXXXX", "whatsapp": "+91 98XXX XXXXX", "upi": "rajeevcable@upi", "hours": "8 AM – 10 PM, all days", "address": "Main Market Road, [Your Town], [District] – [PIN]", "officeHours": "Open Monday to Saturday, 9:30 AM – 8:00 PM"}, "connect": {"payText": "Pay at our office, to your area collection agent, or by UPI using your Customer ID / STB number as the note."}, "hero": {"eyebrow": "Digital Cable TV · HD Ready", "title": "Your whole family's TV, crystal clear on every channel.", "highlight": "crystal clear", "lead": "Rajeev Video Cable brings 500+ digital channels, HD picture and Dolby sound to your home through a reliable wired network. No dish, no rain fade, and a local team that picks up the phone.", "cta1": "See monthly packs", "cta2": "Book free installation", "facts": [{"value": "500+", "label": "SD & HD channels"}, {"value": "100+", "label": "HD channels"}, {"value": "24 hr", "label": "fault repair target"}], "screenHint": "Press OK on your remote to open the Guide", "screen": [{"lcn": "302", "channel": "Star Sports 1 HD", "now": "Evening Cricket Highlights", "next": "Match Point"}, {"lcn": "102", "channel": "Star Plus", "now": "Anupamaa", "next": "Yeh Rishta…"}, {"lcn": "201", "channel": "Star Gold", "now": "Evening Movie", "next": "Movie Night"}, {"lcn": "401", "channel": "Aaj Tak", "now": "News at 8", "next": "Special Report"}]}, "why": {"eyebrow": "Why Rajeev Video Cable", "title": "Better than analog. Steadier than a dish.", "text": "Our digital signal comes over a cable to your set-top box, so the picture stays sharp in heavy rain and storms."}, "features": [{"icon": "hd", "title": "HD picture, Dolby sound", "text": "Watch sports, movies and serials in full HD with digital audio, on any modern TV."}, {"icon": "guide", "title": "On-screen Program Guide", "text": "See what's on now and next on every channel, set reminders and find shows by genre."}, {"icon": "lock", "title": "Parental lock", "text": "Lock any channel with a PIN so children only watch what you allow."}, {"icon": "signal", "title": "No rain fade", "text": "A wired network means no dish to realign and no lost signal during the monsoon."}, {"icon": "choose", "title": "Choose your channels", "text": "Pick a ready-made pack or add individual channels à la carte, as allowed under TRAI rules."}, {"icon": "local", "title": "Local service team", "text": "Our technicians live in your area. Complaints are attended to within 24 hours."}], "packsHead": {"title": "A pack for every home"}, "pricing": {"freeMonths": 1}, "packs": [{"name": "Basic Value", "sub": "Free-to-air + popular Hindi", "price": 180, "channels": "230+ SD", "popular": false, "features": ["All DD & free-to-air channels", "Hindi news & music", "Regional channels", "Program guide & parental lock"]}, {"name": "Family Plus", "sub": "Serials, movies, kids & news", "price": 299, "channels": "320+ SD · 20 HD", "popular": true, "features": ["Everything in Basic Value", "Top Hindi GEC & movies", "Kids & infotainment", "20 HD channels"]}, {"name": "HD Premium", "sub": "Best picture on big screens", "price": 449, "channels": "350+ · 80 HD", "popular": false, "features": ["Everything in Family Plus", "80 HD channels", "English movies & lifestyle", "Priority service"]}, {"name": "Sports & Movies HD", "sub": "For cricket and cinema fans", "price": 549, "channels": "380+ · 110 HD", "popular": false, "features": ["Everything in HD Premium", "All major sports HD channels", "Premium movie channels", "Free second-room box visit"]}], "packsNote": "Prices shown include the Network Capacity Fee (NCF) and pay-channel charges; 18% GST is extra. Sample prices for display: please confirm current rates with our office. Channel line-ups follow broadcaster bouquets and may change.", "channelsText": "Channel numbers (LCN) as they appear on your Rajeev Video Cable set-top box.", "channels": [{"lcn": "101", "name": "DD National", "genre": "Hindi GEC", "hd": false}, {"lcn": "102", "name": "Star Plus", "genre": "Hindi GEC", "hd": false}, {"lcn": "103", "name": "Star Plus HD", "genre": "Hindi GEC", "hd": true}, {"lcn": "104", "name": "Colors", "genre": "Hindi GEC", "hd": false}, {"lcn": "106", "name": "Sony Entertainment", "genre": "Hindi GEC", "hd": false}, {"lcn": "108", "name": "Zee TV", "genre": "Hindi GEC", "hd": false}, {"lcn": "110", "name": "Sony SAB", "genre": "Hindi GEC", "hd": false}, {"lcn": "201", "name": "Star Gold", "genre": "Movies", "hd": false}, {"lcn": "202", "name": "Zee Cinema", "genre": "Movies", "hd": false}, {"lcn": "203", "name": "Sony Max", "genre": "Movies", "hd": false}, {"lcn": "205", "name": "Star Movies HD", "genre": "Movies", "hd": true}, {"lcn": "207", "name": "&pictures", "genre": "Movies", "hd": false}, {"lcn": "301", "name": "Star Sports 1", "genre": "Sports", "hd": false}, {"lcn": "302", "name": "Star Sports 1 HD", "genre": "Sports", "hd": true}, {"lcn": "304", "name": "Sony Sports Ten 1", "genre": "Sports", "hd": false}, {"lcn": "306", "name": "DD Sports", "genre": "Sports", "hd": false}, {"lcn": "401", "name": "Aaj Tak", "genre": "News", "hd": false}, {"lcn": "402", "name": "ABP News", "genre": "News", "hd": false}, {"lcn": "403", "name": "NDTV India", "genre": "News", "hd": false}, {"lcn": "405", "name": "DD News", "genre": "News", "hd": false}, {"lcn": "407", "name": "Times Now", "genre": "News", "hd": false}, {"lcn": "501", "name": "Cartoon Network", "genre": "Kids", "hd": false}, {"lcn": "502", "name": "Pogo", "genre": "Kids", "hd": false}, {"lcn": "503", "name": "Nick", "genre": "Kids", "hd": false}, {"lcn": "505", "name": "Disney Junior", "genre": "Kids", "hd": false}, {"lcn": "601", "name": "Discovery", "genre": "Infotainment", "hd": false}, {"lcn": "602", "name": "National Geographic", "genre": "Infotainment", "hd": false}, {"lcn": "604", "name": "History TV18", "genre": "Infotainment", "hd": false}, {"lcn": "701", "name": "Aastha", "genre": "Devotional", "hd": false}, {"lcn": "702", "name": "Sanskar", "genre": "Devotional", "hd": false}, {"lcn": "801", "name": "9XM", "genre": "Music", "hd": false}, {"lcn": "802", "name": "MTV Beats", "genre": "Music", "hd": false}], "stb": {"title": "One small box. Hundreds of channels.", "lead": "Every connection comes with a digital set-top box and remote, installed and tuned by our technician. Choose SD for older TVs, or HD for LED and smart TVs.", "specs": [{"label": "SD box", "value": "₹1,000 one-time"}, {"label": "HD box", "value": "₹1,500 one-time"}, {"label": "Output", "value": "HDMI 1080p · AV"}, {"label": "Warranty", "value": "1 year, free repair"}], "note": "Box prices are sample values. Please confirm with our office."}, "steps": {"title": "From call to first channel in four steps", "items": [{"title": "Request a connection", "text": "Fill the form below or call our helpline with your address."}, {"title": "Share your KYC", "text": "Keep an Aadhaar card or any government ID and a phone number ready."}, {"title": "Installation at home", "text": "Our technician lays the cable, installs the set-top box and tunes all channels."}, {"title": "Pick a pack and watch", "text": "Choose your pack, pay the first month and start watching the same day."}]}, "faq": [{"q": "What do I need for a new connection?", "a": "A TV with HDMI or AV input, one government ID (such as Aadhaar), a mobile number and your address. Our technician brings the set-top box, remote and cable."}, {"q": "What is the Network Capacity Fee (NCF)?", "a": "NCF is the fee set under TRAI rules for carrying channels to your home. It covers your first 200 SD channels, including all free-to-air and DD channels. Our pack prices already include it."}, {"q": "Can I add a single channel to my pack?", "a": "Yes. Any pay channel can be added à la carte at its maximum retail price set by the broadcaster. Call or WhatsApp us with the channel name and we will activate it."}, {"q": "My screen says \"No signal\". What should I do?", "a": "Check that the cable is firmly connected to the set-top box, then switch the box off at the wall for 30 seconds and turn it back on. If the message stays, call our helpline with your Customer ID and we'll send a technician."}, {"q": "Can I get two TVs on one connection?", "a": "Each TV needs its own set-top box. A second box is available at a discounted pack price for the same home."}, {"q": "How do I shift my connection to a new house?", "a": "If the new house is in our service area, we shift it for a small fee. Tell us your moving date a few days in advance."}], "chat": {"name": "Rajeev Cable Help", "greeting": "Namaste! I'm the Rajeev Video Cable assistant. Tap a button below to see plans, book a new connection, register a complaint or renew your pack. You can also type a question, like a channel name."}, "footer": {"about": "Your local digital cable TV operator, serving homes in our town with clear pictures and quick service.", "legal": "Channel names belong to their respective broadcasters."}}</script>
+<script id="site-js">
+(function(){
+const API=((window.RVC_CONFIG&&window.RVC_CONFIG.apiUrl)||'').trim();
+const API_READY=/^https:\/\/script\.google(usercontent)?\.com\//.test(API);
+const DRAFT_KEY='rvc-admin-draft',TOKEN_KEY='rvc-admin-token',INFO_KEY='rvc-admin-info',CACHE_KEY='rvc-content',ME_KEY='rvc-me';
+const DEFAULTS=JSON.parse(document.getElementById('site-data').textContent);
+const app=document.getElementById('app');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>'₹'+(Number(n)||0).toLocaleString('en-IN');
+const clone=o=>JSON.parse(JSON.stringify(o));
+const st=s=>s==='session'?window.sessionStorage:window.localStorage;
+const store={get(s,k){try{return st(s).getItem(k)}catch(e){return null}},set(s,k,v){try{st(s).setItem(k,v)}catch(e){}},del(s,k){try{st(s).removeItem(k)}catch(e){}}};
+// Fill in any fields that newer versions of the site added, so older saved content still works.
+function withDefaults(c,d){if(!c||typeof c!=='object'||Array.isArray(c))return c===undefined?clone(d):c;const o={};Object.keys(d).forEach(k=>{o[k]=(k in c)?(d[k]&&typeof d[k]==='object'&&!Array.isArray(d[k])?withDefaults(c[k],d[k]):c[k]):clone(d[k])});Object.keys(c).forEach(k=>{if(!(k in o))o[k]=c[k]});return o}
+let DATA=DEFAULTS;
+try{const c=JSON.parse(store.get('local',CACHE_KEY)||'null');if(c)DATA=withDefaults(c,DEFAULTS)}catch(e){}
+
+/* ---------- Google Sheet connection ---------- */
+async function api(body){
+  if(!API_READY)throw {code:'not_connected'};
+  const ctl=new AbortController();const t=setTimeout(()=>ctl.abort(),25000);
+  try{
+    const r=body?await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body),signal:ctl.signal})
+              :await fetch(API+'?action=content',{cache:'no-store',signal:ctl.signal});
+    return await r.json();
+  }catch(e){throw {code:'network'}}finally{clearTimeout(t)}
+}
+
+const ICONS={
+ hd:'<rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 9v4M7 11h3M10 9v4M13 9v4h1.5a2 2 0 000-4z"/>',
+ guide:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/>',
+ lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',
+ signal:'<path d="M4 12h4l2-6 4 12 2-6h4"/>',
+ choose:'<path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/>',
+ local:'<path d="M12 22s7-5.5 7-12a7 7 0 00-14 0c0 6.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+ support:'<path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+ rupee:'<path d="M7 5h10M7 9h10M7 5h3a4 4 0 010 8H7l7 7"/>',
+ wifi:'<path d="M2 9a15 15 0 0120 0M5 12.5a10 10 0 0114 0M8.5 16a5 5 0 017 0"/><circle cx="12" cy="19" r="1"/>'
+};
+const icon=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]||ICONS.hd}</svg>`;
+const CHAT_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/></svg>';
+const SEND_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const MENU_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+
+/* ---------- Pricing ---------- */
+const freeMonths=d=>Math.max(0,Math.min(11,Number(d.pricing.freeMonths)||0));
+function priceFor(d,p,months){const pr=Number(p.price)||0;return months===12?pr*(12-freeMonths(d)):pr*months}
+const periodLabel=m=>m===1?'Monthly':m===12?'12 months':m+' months';
+
+/* ---------- Public site ---------- */
+let D=DATA, mode='', timers=[], months=1, genre='All';
+function logoMark(d){return `<span class="logo-mark"><img src="${esc(d.brand.logo)}" alt=""></span>`}
+function siteHTML(d){
+  const h=d.hero, c=d.contact, title=esc(h.title), hl=esc(h.highlight);
+  const h1=hl&&title.includes(hl)?title.replace(hl,`<em>${hl}</em>`):title;
+  const scr=h.screen[0]||{lcn:'',channel:'',now:'',next:''};
+  return `
+<div class="strip"><div class="wrap"><span>${esc(d.strip.left)}</span><span>Helpline: ${esc(c.helpline)} · ${esc(c.hours)}</span></div></div>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#top" aria-label="${esc(d.brand.name)} home">${logoMark(d)}<span class="logo-text">${esc(d.brand.name)}<small>${esc(d.brand.tagline)}</small></span></a>
+  <nav class="links" id="navLinks" aria-label="Main"><a href="#why">Why us</a><a href="#packs">Packs</a><a href="#channels">Channels</a><a href="#stb">Set-top box</a><a href="#connect">Pay &amp; contact</a><a href="#faq">FAQ</a></nav>
+  <a class="btn btn-primary" href="#connect">Get connection</a>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">${MENU_ICON}</button>
+</div></header>
+<main id="top">
+<section class="hero"><div class="wrap">
+  <div>
+    <div class="eyebrow">${esc(h.eyebrow)}</div>
+    <h1>${h1}</h1>
+    <p class="lead">${esc(h.lead)}</p>
+    <div class="cta"><a class="btn btn-primary" href="#packs">${esc(h.cta1)}</a><a class="btn btn-ghost" href="#connect">${esc(h.cta2)}</a></div>
+    <div class="hero-facts">${h.facts.map(f=>`<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join('')}</div>
+  </div>
+  <div class="tv" aria-hidden="true">
+    <div class="tv-frame"><div class="screen">
+      <div class="screen-now"><span class="tag"><i></i><span id="nowTag">LIVE · CH ${esc(scr.lcn)}</span></span><div><h3 id="nowTitle">${esc(scr.now)}</h3><p id="nowMeta">${esc(scr.channel)}</p></div></div>
+      <div class="epg" id="epg"></div>
+    </div></div>
+    <div class="tv-stand"></div>
+    ${h.screenHint?`<div class="remote-hint">${esc(h.screenHint)}</div>`:''}
+  </div>
+</div></section>
+
+<section class="block" id="why"><div class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">${esc(d.why.eyebrow)}</div><h2>${esc(d.why.title)}</h2></div><p>${esc(d.why.text)}</p></div>
+  <div class="features">${d.features.map(f=>`<div class="feat">${icon(f.icon)}<h3>${esc(f.title)}</h3><p>${esc(f.text)}</p></div>`).join('')}</div>
+</div></section>
+
+<section class="block" id="packs"><div class="wrap">
+  <div class="sec-head">
+    <div><div class="eyebrow">Monthly packs</div><h2>${esc(d.packsHead.title)}</h2></div>
+    <div class="toggle" role="group" aria-label="Billing period">
+      <button type="button" aria-pressed="${months===1}" data-m="1">Monthly</button>
+      <button type="button" aria-pressed="${months===3}" data-m="3">3 months</button>
+      <button type="button" aria-pressed="${months===12}" data-m="12">12 months${freeMonths(d)?` · ${freeMonths(d)} free`:''}</button>
+    </div>
+  </div>
+  <div class="packs" id="packGrid"></div>
+  <p class="fineprint">${esc(d.packsNote)}</p>
+</div></section>
+
+<section class="block" id="channels"><div class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">Channel guide</div><h2>Find your favourite channel</h2></div><p>${esc(d.channelsText)}</p></div>
+  <div class="search"><input id="chSearch" type="search" placeholder="Search a channel, e.g. Star Plus" aria-label="Search channels"></div>
+  <div class="genres" id="genres" role="group" aria-label="Filter by genre"></div>
+  <div class="guide" id="guide"></div>
+</div></section>
+
+<section class="block stb" id="stb"><div class="wrap">
+  <div>
+    <div class="eyebrow">Set-top box</div>
+    <h2>${esc(d.stb.title)}</h2>
+    <p class="lead">${esc(d.stb.lead)}</p>
+    <dl class="spec">${d.stb.specs.map(s=>`<div><dt>${esc(s.label)}</dt><dd>${esc(s.value)}</dd></div>`).join('')}</dl>
+    ${d.stb.note?`<p class="fineprint">${esc(d.stb.note)}</p>`:''}
+  </div>
+  <div class="box-art" aria-hidden="true"><svg viewBox="0 0 480 300">
+    <ellipse cx="240" cy="250" rx="200" ry="18" fill="#000" opacity=".35"/>
+    <rect x="50" y="130" width="380" height="110" rx="16" fill="#1d2433"/><rect x="50" y="130" width="380" height="20" rx="10" fill="#2a3346"/>
+    <rect x="80" y="178" width="120" height="34" rx="6" fill="#0b1222"/>
+    <text x="140" y="201" fill="#ff4d52" font-family="JetBrains Mono, monospace" font-weight="700" font-size="18" text-anchor="middle">${esc(scr.lcn)}</text>
+    <circle cx="232" cy="195" r="5" fill="#2bb673"/>
+    <image href="${esc(d.brand.logo)}" x="356" y="174" width="48" height="44" preserveAspectRatio="xMidYMid meet"/>
+    <g transform="translate(300 30) rotate(18)"><rect width="70" height="190" rx="30" fill="#2a3346"/><circle cx="35" cy="34" r="9" fill="#e5484d"/><circle cx="35" cy="86" r="22" fill="#1d2433"/><circle cx="35" cy="86" r="9" fill="#ff4d52"/><g fill="#5a6684"><circle cx="20" cy="130" r="6"/><circle cx="35" cy="130" r="6"/><circle cx="50" cy="130" r="6"/><circle cx="20" cy="150" r="6"/><circle cx="35" cy="150" r="6"/><circle cx="50" cy="150" r="6"/><circle cx="35" cy="170" r="6"/></g></g>
+  </svg></div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">Getting connected</div><h2>${esc(d.steps.title)}</h2></div></div>
+  <div class="steps">${d.steps.items.map((s,i)=>`<div class="step"><b>STEP ${i+1}</b><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join('')}</div>
+</div></section>
+
+<section class="block" id="connect"><div class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">New connection · Recharge · Support</div><h2>We're just a call away</h2></div></div>
+  <div class="connect">
+    <div class="card">
+      <h3>Book a new connection</h3>
+      <p>Tell us where you live and we will call you back to fix an installation time.</p>
+      <form id="leadForm" novalidate>
+        <div class="row2">
+          <label for="f-name">Full name<input id="f-name" name="name" autocomplete="name" placeholder="Your name"></label>
+          <label for="f-phone">Mobile number<input id="f-phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile"></label>
+          <label class="full" for="f-addr">Address / locality<input id="f-addr" name="addr" autocomplete="street-address" placeholder="House no., street, area"></label>
+          <label for="f-pack">Interested in<select id="f-pack" name="pack">${d.packs.map(p=>`<option${p.popular?' selected':''}>${esc(p.name)}</option>`).join('')}<option>Not sure yet</option></select></label>
+          <label for="f-box">Set-top box<select id="f-box" name="box"><option>HD box</option><option>SD box</option><option>Not sure</option></select></label>
+        </div>
+        <button class="btn btn-primary" type="submit" id="leadBtn">Request a callback</button>
+        <div class="ok" id="formOk" hidden></div>
+      </form>
+    </div>
+    <div class="pay">
+      <div class="card">
+        <h3>Complaint or renewal?</h3>
+        <p>Our chat assistant takes your request and our team follows up.</p>
+        <div class="quick"><button class="btn btn-primary btn-sm" type="button" data-flow="complaint">Register a complaint</button><button class="btn btn-line btn-sm" type="button" data-flow="billing">Renew / pay bill</button></div>
+      </div>
+      <div class="card">
+        <h3>Recharge &amp; pay bills</h3>
+        <p>${esc(d.connect.payText)}</p>
+        <div class="contact-line"><span>UPI ID</span><b id="c-upi">${esc(c.upi)}</b><button class="copy" type="button" data-copy="c-upi">Copy</button></div>
+        <div class="contact-line"><span>Helpline</span><b id="c-phone">${esc(c.helpline)}</b><button class="copy" type="button" data-copy="c-phone">Copy</button></div>
+        <div class="contact-line"><span>WhatsApp</span><b id="c-wa">${esc(c.whatsapp)}</b><button class="copy" type="button" data-copy="c-wa">Copy</button></div>
+      </div>
+      <div class="card"><h3>Visit our office</h3><p>${esc(d.brand.name)}\n${esc(c.address)}\n${esc(c.officeHours)}</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="block" id="faq"><div class="wrap">
+  <div class="sec-head"><div><div class="eyebrow">Help</div><h2>Common questions</h2></div></div>
+  <div class="faq">${d.faq.map((f,i)=>`<details${i===0?' open':''}><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <div><a class="logo" href="#top">${logoMark(d)}<span class="logo-text">${esc(d.brand.name)}<small>${esc(d.brand.tagline)}</small></span></a><p style="margin-top:14px;max-width:36ch">${esc(d.footer.about)}</p></div>
+  <div><h4>Services</h4><ul><li><a href="#packs">Digital cable TV</a></li><li><a href="#stb">HD set-top box</a></li><li><a href="#connect">New connection</a></li></ul></div>
+  <div><h4>Help</h4><ul><li><a href="#connect">Recharge &amp; pay</a></li><li><a href="#faq">FAQ</a></li><li><a href="#channels">Channel list</a></li></ul></div>
+  <div><h4>Contact</h4><ul><li>${esc(c.helpline)}</li><li>${esc(c.hours)}</li></ul></div>
+  <div class="legal"><span>© ${new Date().getFullYear()} ${esc(d.brand.name)}. ${esc(d.footer.legal)}</span><a href="#admin">Admin login</a></div>
+</div></footer>`;
+}
+
+function renderPacks(){
+  const d=D,g=document.getElementById('packGrid');if(!g)return;
+  const free=freeMonths(d);
+  g.innerHTML=d.packs.map((p,i)=>{
+    const pr=Number(p.price)||0, pay=priceFor(d,p,months);
+    const label=months===1?'/month':months===3?'/3 months':'/12 months';
+    const note=months===12?(free?`Pay for ${12-free}, get 12 · ${fmt(Math.round(pay/12))}/mo`:`${fmt(pr)}/month`):months===3?`${fmt(pr)}/month`:'Billed every month';
+    return `<article class="pack${p.popular?' pop':''}">${p.popular?'<span class="badge">Most chosen</span>':''}
+      <div><h3>${esc(p.name)}</h3><p class="p-sub">${esc(p.sub)}</p></div>
+      <div><div class="price">${fmt(pay)} <small>${label}</small></div><div class="price-note">${note}</div></div>
+      <span class="chcount">▣ ${esc(p.channels)} channels</span>
+      <ul>${(p.features||[]).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
+      <button class="btn btn-primary" type="button" data-pick="${i}">Choose ${esc(p.name)}</button></article>`}).join('');
+}
+function renderGuide(){
+  const q=document.getElementById('chSearch'),guide=document.getElementById('guide');if(!guide)return;
+  const s=q.value.trim().toLowerCase();
+  const list=D.channels.filter(c=>(genre==='All'||c.genre===genre)&&(!s||c.name.toLowerCase().includes(s)||String(c.lcn)===s));
+  guide.innerHTML=list.length?list.map(c=>`<div class="chan"><span class="num">${esc(c.lcn)}</span><div style="min-width:0"><div class="nm">${esc(c.name)}</div><div class="g">${esc(c.genre)}</div></div>${c.hd?'<span class="hd">HD</span>':''}</div>`).join(''):`<p class="guide-empty">No channel matches "${esc(q.value)}". Call us to ask whether it can be added à la carte.</p>`;
+}
+function copyText(el,btn){
+  const sel=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(el.textContent).then(()=>{btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1500)}).catch(sel)}catch(e){sel()}
+}
+function wireSite(){
+  timers.forEach(clearInterval);timers=[];
+  const menu=document.getElementById('menuBtn'),links=document.getElementById('navLinks');
+  menu.addEventListener('click',()=>{const o=!links.classList.contains('open');links.classList.toggle('open',o);menu.setAttribute('aria-expanded',o)});
+  links.addEventListener('click',e=>{if(e.target.closest('a')){links.classList.remove('open');menu.setAttribute('aria-expanded','false')}});
+  renderPacks();
+  document.querySelectorAll('.toggle button').forEach(b=>b.addEventListener('click',()=>{months=+b.dataset.m;document.querySelectorAll('.toggle button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderPacks()}));
+  document.getElementById('packGrid').addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(b)Chat.pickPlan(+b.dataset.pick,months)});
+  document.querySelectorAll('[data-flow]').forEach(b=>b.addEventListener('click',()=>Chat.start(b.dataset.flow)));
+  const genres=['All',...new Set(D.channels.map(c=>c.genre))];if(!genres.includes(genre))genre='All';
+  const gEl=document.getElementById('genres');
+  gEl.innerHTML=genres.map(g=>`<button type="button" aria-pressed="${g===genre}" data-g="${esc(g)}">${esc(g)}</button>`).join('');
+  gEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;genre=b.dataset.g;gEl.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderGuide()});
+  document.getElementById('chSearch').addEventListener('input',renderGuide);
+  renderGuide();
+  const EPG=D.hero.screen;let sel=0;
+  const renderEPG=()=>{if(!EPG.length)return;
+    document.getElementById('epg').innerHTML=EPG.slice(0,4).map((r,i)=>`<div class="epg-row${i===sel?' sel':''}"><span class="lcn">${esc(r.lcn)}</span><span class="ch">${esc(r.channel)}</span><span class="on">${esc(r.now)}</span><span>${esc(r.next)}</span></div>`).join('');
+    const r=EPG[sel];document.getElementById('nowTitle').textContent=r.now;document.getElementById('nowMeta').textContent=r.channel+' · on now';document.getElementById('nowTag').textContent='LIVE · CH '+r.lcn};
+  renderEPG();
+  if(EPG.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches)timers.push(setInterval(()=>{sel=(sel+1)%Math.min(4,EPG.length);renderEPG()},3200));
+  document.getElementById('leadForm').addEventListener('submit',async e=>{
+    e.preventDefault();const f=e.target,ok=document.getElementById('formOk'),btn=document.getElementById('leadBtn');
+    const name=f.name.value.trim(),phone=f.phone.value.replace(/\D/g,''),addr=f.addr.value.trim();
+    ok.hidden=false;
+    if(!name||phone.length<10||!addr){ok.className='ok bad';ok.textContent='Please enter your name, a 10-digit mobile number and your address.';return}
+    btn.disabled=true;btn.textContent='Sending…';
+    const r=await sendRequest('connection',{'Name':name,'Mobile':phone,'Address':addr,'Plan':f.pack.value,'Set-top Box':f.box.value},'Website form');
+    btn.disabled=false;btn.textContent='Request a callback';
+    if(r.ok){ok.className='ok';ok.textContent=`Thanks, ${name}. Your request number is ${r.ref}. Our team will call you on ${phone} to fix an installation time.`;f.reset();rememberMe(name,phone)}
+    else{ok.className='ok bad';ok.textContent=r.message}
+  });
+  document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>copyText(document.getElementById(b.dataset.copy),b)));
+}
+
+/* ---------- Saving requests to the sheet ---------- */
+function rememberMe(name,mobile){store.set('session',ME_KEY,JSON.stringify({name,mobile}))}
+function me(){try{return JSON.parse(store.get('session',ME_KEY)||'null')||{}}catch(e){return {}}}
+async function sendRequest(type,data,source){
+  const fallback=`We couldn't send this right now. Please call ${D.contact.helpline} or WhatsApp ${D.contact.whatsapp} and we'll take it over the phone.`;
+  try{
+    const r=await api({action:'submit',type,data,source});
+    if(r&&r.ok)return {ok:true,ref:r.ref};
+    const known=r&&r.error&&!/^[a-z_]+$/.test(r.error);
+    return {ok:false,message:known?r.error:fallback};
+  }catch(e){return {ok:false,message:fallback}}
+}
+
+/* ---------- Chatbot ---------- */
+const VISIT=['Any time','Morning (9 AM – 12 PM)','Afternoon (12 – 4 PM)','Evening (4 – 8 PM)'];
+const PROBLEMS=['No signal on TV','Some channels missing','Picture or sound breaking','Set-top box or remote not working','Wrong channels in my pack','Other'];
+const MENU=[['plan','View plans'],['connection','New connection'],['complaint','Register complaint'],['billing','Billing & renewal'],['contact','Talk to us']];
+const FORMS={
+  plan:{title:'Confirm your plan',button:'Confirm plan',fields:[
+    {k:'Name',l:'Full name',req:1,auto:'name'},{k:'Mobile',l:'Mobile number',req:1,t:'tel'},
+    {k:'Area / Address',l:'Area / address',req:1,auto:'street-address'},{k:'Notes',l:'Anything else? (optional)',t:'area'}]},
+  connection:{title:'New connection',button:'Book connection',fields:[
+    {k:'Name',l:'Full name',req:1,auto:'name'},{k:'Mobile',l:'Mobile number',req:1,t:'tel'},
+    {k:'Address',l:'House no., building, street',req:1,auto:'street-address'},{k:'Area / PIN',l:'Area / PIN code',req:1},
+    {k:'Plan',l:'Pack',t:'select',opts:d=>d.packs.map(p=>p.name).concat('Not sure yet')},
+    {k:'Set-top Box',l:'Set-top box',t:'select',opts:()=>['HD box','SD box','Not sure']},
+    {k:'Preferred Visit Time',l:'Best time to visit',t:'select',opts:()=>VISIT},{k:'Notes',l:'Notes (optional)',t:'area'}]},
+  complaint:{title:'Register a complaint',button:'Submit complaint',fields:[
+    {k:'Name',l:'Full name',req:1,auto:'name'},{k:'Mobile',l:'Mobile number',req:1,t:'tel'},
+    {k:'Customer ID / STB No',l:'Customer ID or set-top box number',hint:'Printed on the box sticker or your bill. Leave blank if you don’t have it.'},
+    {k:'Problem',l:'What’s the problem?',t:'select',opts:()=>PROBLEMS},{k:'Details',l:'Tell us more (optional)',t:'area'},
+    {k:'Preferred Visit Time',l:'Best time for a technician',t:'select',opts:()=>VISIT}]},
+  billing:{title:'Billing & renewal',button:'Send request',fields:[
+    {k:'Request',l:'What do you need?',t:'select',opts:()=>['Renew my pack','Pay my bill','Change my pack','Bill / receipt copy','Other']},
+    {k:'Name',l:'Full name',req:1,auto:'name'},{k:'Mobile',l:'Mobile number',req:1,t:'tel'},
+    {k:'Customer ID / STB No',l:'Customer ID or set-top box number',req:1},
+    {k:'Plan',l:'Pack',t:'select',opts:d=>d.packs.map(p=>p.name)},
+    {k:'Months',l:'Months',t:'select',opts:()=>['1','3','6','12']},
+    {k:'Amount (₹)',l:'Amount',t:'calc'},
+    {k:'Payment Mode',l:'How will you pay?',t:'select',opts:()=>['Paid by UPI','Pay at office','Send collection agent','Cash at home']},
+    {k:'UPI Transaction ID',l:'UPI transaction ID',showIf:['Payment Mode','Paid by UPI'],hint:'12-digit UTR number from your UPI app'},
+    {k:'Notes',l:'Notes (optional)',t:'area'}]}
+};
+const Chat={
+  open:false,busy:false,seq:0,
+  mount(){
+    const root=document.getElementById('chat');
+    root.innerHTML=`<button class="chat-fab" id="chatFab" type="button" aria-expanded="false" aria-controls="chatPanel">${CHAT_ICON}<span>Chat with us</span></button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat" hidden>
+  <div class="chat-head" id="chatHead"></div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="chips" id="chatChips">${MENU.map(([k,l])=>`<button type="button" data-k="${k}">${l}</button>`).join('')}</div>
+  <form class="chat-form" id="chatForm"><input id="chatInput" autocomplete="off" placeholder="Type your question…" aria-label="Your message"><button type="submit" aria-label="Send">${SEND_ICON}</button></form>
+</div>`;
+    this.head();
+    document.getElementById('chatFab').onclick=()=>this.toggle(true);
+    document.getElementById('chatChips').onclick=e=>{const b=e.target.closest('button');if(b){this.user(b.textContent);this.start(b.dataset.k,true)}};
+    document.getElementById('chatForm').onsubmit=e=>{e.preventDefault();const i=document.getElementById('chatInput');const v=i.value.trim();if(v){i.value='';this.ask(v)}};
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&this.open)this.toggle(false)});
+  },
+  head(){
+    const h=document.getElementById('chatHead');if(!h)return;
+    h.innerHTML=`${logoMark(D)}<div><b>${esc(D.chat.name)}</b><small><i></i>${esc(D.brand.name)} · replies instantly</small></div><button class="chat-close" id="chatClose" type="button" aria-label="Close chat">×</button>`;
+    document.getElementById('chatClose').onclick=()=>this.toggle(false);
+  },
+  toggle(v){
+    this.open=v;document.getElementById('chatPanel').hidden=!v;const fab=document.getElementById('chatFab');fab.hidden=v;fab.setAttribute('aria-expanded',v);
+    document.documentElement.style.overflow=v&&innerWidth<=560?'hidden':'';
+    if(v){if(!document.getElementById('chatLog').children.length)this.bot(D.chat.greeting);if(innerWidth>560)document.getElementById('chatInput').focus()}else fab.focus();
+  },
+  ensureOpen(){if(!this.open)this.toggle(true)},
+  log(){return document.getElementById('chatLog')},
+  scroll(el){const l=this.log();requestAnimationFrame(()=>{if(el&&el.offsetHeight>l.clientHeight*.6)l.scrollTop=el.offsetTop-l.offsetTop-8;else l.scrollTop=l.scrollHeight})},
+  add(node){this.log().appendChild(node);this.scroll(node);return node},
+  bot(t){const m=document.createElement('div');m.className='msg bot';m.textContent=t;return this.add(m)},
+  user(t){const m=document.createElement('div');m.className='msg me';m.textContent=t;return this.add(m)},
+  widget(html){const w=document.createElement('div');w.className='w';w.innerHTML=html;return this.add(w)},
+  start(k,fromChip){
+    this.ensureOpen();
+    if(k==='plan'){this.bot('Here are our packs. Slide to compare, then tap Select.');this.planCards(months);return}
+    if(k==='contact'){const c=D.contact;this.bot(`Helpline: ${c.helpline} (${c.hours})\nWhatsApp: ${c.whatsapp}\nOffice: ${c.address}\n${c.officeHours}`);return}
+    const intro={connection:'Fill in your details and our team will call you to fix an installation time.',complaint:'Sorry about the trouble. Tell us what’s wrong and we’ll get it fixed.',billing:`Renew your pack or ask about a bill here. You can pay by UPI to ${D.contact.upi}.`}[k];
+    if(!intro)return;
+    if(!fromChip)this.user({connection:'New connection',complaint:'Register complaint',billing:'Billing & renewal'}[k]);
+    this.bot(intro);this.form(k,{});
+  },
+  pickPlan(i,m){this.ensureOpen();const p=D.packs[i];if(!p)return;this.user(`I want ${p.name}`);this.choose(i,m)},
+  choose(i,m){
+    const p=D.packs[i],amt=priceFor(D,p,m);
+    this.bot(`Good choice: ${p.name}, ${periodLabel(m).toLowerCase()} for ${fmt(amt)} (GST extra). Share your details and we’ll confirm.`);
+    this.form('plan',{'Plan':p.name,'Billing Period':periodLabel(m),'Amount (₹)':String(amt)});
+  },
+  planCards(m){
+    const id='wp'+(++this.seq);let per=m||1;
+    const w=this.widget(`<div class="w-period" role="group" aria-label="Billing period">${[1,3,12].map(x=>`<button type="button" data-m="${x}" aria-pressed="${x===per}">${x===12&&freeMonths(D)?'12 mo · '+freeMonths(D)+' free':periodLabel(x)}</button>`).join('')}</div>
+      <div class="w-track" id="${id}" tabindex="0" aria-label="Packs"></div>
+      <div class="w-nav"><button type="button" data-dir="-1" aria-label="Previous pack">‹</button><div class="w-dots"></div><button type="button" data-dir="1" aria-label="Next pack">›</button></div>`);
+    const track=w.querySelector('.w-track'),dots=w.querySelector('.w-dots');
+    const draw=()=>{
+      track.innerHTML=D.packs.map((p,i)=>`<div class="w-card${p.popular?' pop':''}">${p.popular?'<span class="tag">Most chosen</span>':''}<h4>${esc(p.name)}</h4>
+        <div class="p">${fmt(priceFor(D,p,per))} <small>/${per===1?'month':per+' months'}</small></div>
+        <div class="n">${esc(p.channels)} channels · ${esc(p.sub)}</div>
+        <ul>${(p.features||[]).slice(0,3).map(f=>`<li>${esc(f)}</li>`).join('')}</ul>
+        <button class="btn btn-primary" type="button" data-sel="${i}">Select ${esc(p.name)}</button></div>`).join('');
+      dots.innerHTML=D.packs.map((_,i)=>`<i${i===0?' class="on"':''}></i>`).join('');
+      const pi=D.packs.findIndex(p=>p.popular);if(pi>0)requestAnimationFrame(()=>track.children[pi].scrollIntoView({block:'nearest',inline:'center'}));
+    };
+    draw();
+    const cur=()=>{const cs=[...track.children];const mid=track.scrollLeft+track.clientWidth/2;let b=0;cs.forEach((c,i)=>{if(Math.abs(c.offsetLeft-track.offsetLeft+c.offsetWidth/2-mid)<Math.abs(cs[b].offsetLeft-track.offsetLeft+cs[b].offsetWidth/2-mid))b=i});return b};
+    track.addEventListener('scroll',()=>{const b=cur();[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===b))},{passive:true});
+    w.addEventListener('click',e=>{
+      const pb=e.target.closest('[data-m]');if(pb){per=+pb.dataset.m;w.querySelectorAll('[data-m]').forEach(x=>x.setAttribute('aria-pressed',x===pb));draw();return}
+      const nb=e.target.closest('[data-dir]');if(nb){const t=track.children[Math.max(0,Math.min(track.children.length-1,cur()+ +nb.dataset.dir))];t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});return}
+      const sb=e.target.closest('[data-sel]');if(sb){const i=+sb.dataset.sel;[...track.children].forEach((c,j)=>c.classList.toggle('sel',j===i));this.user(`Select ${D.packs[i].name}`);this.choose(i,per)}
+    });
+  },
+  form(type,hidden){
+    const def=FORMS[type],id='wf'+(++this.seq),m=me();
+    const pre={Name:m.name||'',Mobile:m.mobile||''};
+    const fld=f=>{
+      const fid=`${id}-${f.k.replace(/[^a-z0-9]/gi,'')}`,lab=`${esc(f.l)}${f.req?' <span class="req">*</span>':''}`,hint=f.hint?`<span class="hint">${esc(f.hint)}</span>`:'';
+      const wrap=x=>`<label for="${fid}" data-k="${esc(f.k)}"${f.showIf?' hidden':''}><span>${lab}</span>${x}${hint}</label>`;
+      if(f.t==='select')return wrap(`<select id="${fid}" name="${esc(f.k)}">${f.opts(D).map(o=>`<option>${esc(o)}</option>`).join('')}</select>`);
+      if(f.t==='area')return wrap(`<textarea id="${fid}" name="${esc(f.k)}" rows="2"></textarea>`);
+      if(f.t==='calc')return `<div data-k="${esc(f.k)}"><span class="hint">${esc(f.l)}</span><div class="calc" id="${fid}"></div></div>`;
+      return wrap(`<input id="${fid}" name="${esc(f.k)}" ${f.t==='tel'?'inputmode="tel" autocomplete="tel" maxlength="14"':f.auto?`autocomplete="${f.auto}"`:''} value="${esc(pre[f.k]||'')}">`);
+    };
+    const summary=hidden.Plan&&type==='plan'?`<div class="upi"><span>${esc(hidden.Plan)} · ${esc(hidden['Billing Period'])}</span><b>${fmt(hidden['Amount (₹)'])}</b></div>`:'';
+    const upi=type==='billing'?`<div class="upi"><span>UPI ID</span><b class="upi-id">${esc(D.contact.upi)}</b><button class="copy" type="button">Copy</button></div>`:'';
+    const w=this.widget(`<h4 class="t">${esc(def.title)}</h4>${summary}<form novalidate>${def.fields.map(fld).join('')}${upi}<div class="err" role="alert" hidden></div><button class="btn btn-primary" type="submit">${esc(def.button)}</button></form>`);
+    const form=w.querySelector('form'),err=w.querySelector('.err');
+    const val=k=>{const el=form.elements[k];return el?el.value.trim():''};
+    const refresh=()=>{
+      def.fields.filter(f=>f.showIf).forEach(f=>{const l=form.querySelector(`[data-k="${f.k}"]`);l.hidden=val(f.showIf[0])!==f.showIf[1]});
+      const c=def.fields.find(f=>f.t==='calc');
+      if(c){const p=D.packs.find(x=>x.name===val('Plan'));const mo=+val('Months')||1;const a=p?(mo===12?priceFor(D,p,12):(Number(p.price)||0)*mo):0;w.querySelector('.calc').textContent=p?`${fmt(a)} for ${mo} month${mo>1?'s':''} + GST`:'—';w.dataset.amount=a}
+    };
+    form.addEventListener('change',refresh);refresh();
+    const cb=w.querySelector('.copy');if(cb)cb.onclick=()=>copyText(w.querySelector('.upi-id'),cb);
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();if(this.busy)return;
+      const data=Object.assign({},hidden);
+      for(const f of def.fields){
+        if(f.t==='calc'){data[f.k]=w.dataset.amount||'';continue}
+        const l=form.querySelector(`[data-k="${f.k}"]`);if(l&&l.hidden)continue;
+        const v=val(f.k);
+        if(f.req&&!v){err.hidden=false;err.textContent=`Please fill in “${f.l}”.`;form.elements[f.k].focus();return}
+        data[f.k]=v;
+      }
+      data.Mobile=data.Mobile.replace(/\D/g,'').slice(-10);
+      if(data.Mobile.length!==10){err.hidden=false;err.textContent='Please enter a 10-digit mobile number.';form.elements.Mobile.focus();return}
+      err.hidden=true;this.busy=true;const btn=form.querySelector('[type=submit]');btn.disabled=true;btn.textContent='Sending…';
+      const r=await sendRequest(type,data,'Website chatbot');
+      this.busy=false;btn.disabled=false;btn.textContent=def.button;
+      if(!r.ok){err.hidden=false;err.textContent=r.message;return}
+      rememberMe(data.Name,data.Mobile);
+      const show=Object.entries(data).filter(([k,v])=>v&&k!=='Name').slice(0,6);
+      w.classList.add('w-done');
+      w.innerHTML=`<h4 class="t">Request received</h4><div><span class="hint">Reference number</span><div class="ref">${esc(r.ref)}</div></div><dl>${show.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(k==='Amount (₹)'?fmt(v):v)}</dd>`).join('')}</dl>`;
+      const next={plan:'Our team will call you shortly to confirm your pack and payment.',connection:'Our team will call you to fix an installation time, usually within 24 hours.',complaint:'A technician will be assigned and will call you before visiting.',billing:'Our accounts team will confirm your renewal or bill on call or WhatsApp.'}[type];
+      this.bot(`Thanks, ${data.Name}! Your reference number is ${r.ref}. ${next} Keep this number for any follow-up.`);
+    });
+    return w;
+  },
+  ask(q){
+    this.user(q);const t=q.toLowerCase();
+    const ch=channelAnswer(t);if(ch){this.bot(ch);return}
+    const intent=/signal|not working|band|kharab|problem|complain|repair|error|blank|chal nahi|nahi chal|missing|fault|issue/.test(t)?'complaint'
+      :/renew|recharge|bill|pay|payment|due|expire|expiry|paisa|jama/.test(t)?'billing'
+      :/new connection|install|connection chahiye|lagwa|lagana|lagao|book|new cable/.test(t)?'connection'
+      :/price|pack|plan|rate|cost|kitna|kitne|monthly|charges|offer|tariff/.test(t)?'plan':'';
+    if(intent==='plan'){this.bot('Here are our packs. Slide to compare, then tap Select.');this.planCards(months);return}
+    if(intent){this.bot({complaint:'I can register a complaint for you right here.',billing:`I can take your renewal or bill request. You can pay by UPI to ${D.contact.upi}.`,connection:'Great! Fill in your details and our team will call you to fix an installation time.'}[intent]);this.form(intent,{});return}
+    this.bot(localAnswer(t));
+  }
+};
+function channelAnswer(t){
+  const base=n=>n.toLowerCase().replace(/(\s+(hd|\d+))+$/,'').trim();
+  const chs=D.channels.filter(ch=>{const n=ch.name.toLowerCase(),b=base(ch.name);return t.includes(n)||(b.length>=3&&t.includes(b))}).sort((a,b)=>b.name.length-a.name.length);
+  return chs.length?chs.slice(0,4).map(ch=>`${ch.name} is on channel ${ch.lcn}${ch.hd?' (HD)':''}.`).join(' '):'';
+}
+function localAnswer(t){
+  const d=D,c=d.contact,has=re=>re.test(t);
+  if(has(/set.?top|stb|\bbox\b|remote/))return `${d.stb.lead}\n`+d.stb.specs.map(s=>`• ${s.label}: ${s.value}`).join('\n');
+  if(has(/contact|phone|number|call|whatsapp|address|office|timing|hours|kahan|where/))return `Helpline: ${c.helpline} (${c.hours})\nWhatsApp: ${c.whatsapp}\nOffice: ${c.address}\n${c.officeHours}`;
+  if(has(/channel|hd|list/))return `Search any channel in the "Channels" section of this page, or tell me the channel name and I'll give you its number.`;
+  const words=t.split(/\W+/).filter(w=>w.length>3);let best=null,score=0;
+  d.faq.forEach(f=>{const s=words.filter(w=>(f.q+' '+f.a).toLowerCase().includes(w)).length;if(s>score){score=s;best=f}});
+  if(best&&score>=2)return best.a;
+  if(has(/^(hi|hello|hey|namaste|namaskar)/))return d.chat.greeting;
+  return `I'm not sure about that. Use the buttons below to see plans, book a connection, register a complaint or renew. You can also call ${c.helpline} (${c.hours}).`;
+}
+
+function showSite(data,preview){
+  D=data;mode=preview?'preview':'site';
+  document.title=data.brand.name;
+  document.getElementById('chat').hidden=false;Chat.head();
+  app.innerHTML=siteHTML(data)+(preview?`<div class="preview-bar"><span>Previewing unpublished changes</span><button class="btn btn-sm btn-line" type="button" id="pvBack">Back to editor</button><button class="btn btn-sm btn-primary" type="button" id="pvPub">Publish</button></div>`:'');
+  wireSite();
+  if(preview){document.getElementById('pvBack').onclick=()=>{if(location.hash==='#admin')showAdmin();else location.hash='#admin'};document.getElementById('pvPub').onclick=publish;window.scrollTo(0,0)}
+}
+
+/* ---------- Admin ---------- */
+let draft=null, tab='business', adminMsg=null;
+const token=()=>store.get('session',TOKEN_KEY);
+const info=()=>{try{return JSON.parse(store.get('session',INFO_KEY)||'{}')}catch(e){return {}}};
+const SCHEMA=[
+ {id:'business',label:'Business & contact',help:'Name, logo and the contact details shown across the site and in the chatbot.',fields:[
+  {k:'brand.name',l:'Business name'},{k:'brand.tagline',l:'Tagline under the name'},
+  {k:'brand.logo',l:'Logo',t:'image',w:1},{k:'brand.description',l:'Search engine description',t:'area',w:1},
+  {k:'strip.left',l:'Message in the red top strip',w:1},
+  {k:'contact.helpline',l:'Helpline number'},{k:'contact.whatsapp',l:'WhatsApp number'},
+  {k:'contact.upi',l:'UPI ID'},{k:'contact.hours',l:'Helpline hours'},
+  {k:'contact.address',l:'Office address',t:'area',w:1},{k:'contact.officeHours',l:'Office opening hours',w:1},
+  {k:'connect.payText',l:'How to pay (shown in Recharge & pay)',t:'area',w:1},
+  {k:'footer.about',l:'Footer description',t:'area',w:1},{k:'footer.legal',l:'Footer note',w:1}]},
+ {id:'hero',label:'Home banner',help:'The first section visitors see.',fields:[
+  {k:'hero.eyebrow',l:'Small label above the headline',w:1},{k:'hero.title',l:'Headline',w:1},
+  {k:'hero.highlight',l:'Words in the headline to show in red',hint:'Must match part of the headline exactly',w:1},
+  {k:'hero.lead',l:'Intro paragraph',t:'area',w:1},{k:'hero.cta1',l:'Red button text'},{k:'hero.cta2',l:'Outline button text'},
+  {k:'hero.facts',l:'Key numbers',t:'list',item:'Number',fields:[{k:'value',l:'Number'},{k:'label',l:'Label'}],blank:{value:'',label:''}},
+  {k:'hero.screenHint',l:'Note beside the TV',w:1},
+  {k:'hero.screen',l:'Programme guide on the TV (first 4 rows shown)',t:'list',item:'Row',fields:[{k:'lcn',l:'Channel no.'},{k:'channel',l:'Channel'},{k:'now',l:'On now'},{k:'next',l:'Next'}],blank:{lcn:'',channel:'',now:'',next:''}}]},
+ {id:'features',label:'Why us',help:'The benefits grid.',fields:[
+  {k:'why.eyebrow',l:'Small label'},{k:'why.title',l:'Heading'},{k:'why.text',l:'Text beside the heading',t:'area',w:1},
+  {k:'features',l:'Benefits',t:'list',item:'Benefit',fields:[{k:'icon',l:'Icon',t:'select',opts:Object.keys(ICONS)},{k:'title',l:'Title'},{k:'text',l:'Description',t:'area',w:1}],blank:{icon:'hd',title:'',text:''}}]},
+ {id:'packs',label:'Packs & prices',help:'Monthly price in rupees. 3-month and 12-month prices are worked out from it. The chatbot plan cards use the same packs.',fields:[
+  {k:'packsHead.title',l:'Section heading'},{k:'pricing.freeMonths',l:'Free months on 12-month payment',t:'number'},
+  {k:'packs',l:'Packs',t:'list',item:'Pack',fields:[{k:'name',l:'Pack name'},{k:'sub',l:'Short description'},{k:'price',l:'Monthly price (₹)',t:'number'},{k:'channels',l:'Channel count text',hint:'e.g. 320+ SD · 20 HD'},{k:'popular',l:'Highlight as "Most chosen"',t:'bool',w:1},{k:'features',l:'What’s included (one per line)',t:'lines',w:1}],blank:{name:'New pack',sub:'',price:0,channels:'',popular:false,features:[]}},
+  {k:'packsNote',l:'Small print under the packs',t:'area',w:1}]},
+ {id:'channels',label:'Channels',help:'One channel per line: number, name, genre, and HD if it is an HD channel.',fields:[
+  {k:'channelsText',l:'Text beside the heading',w:1},{k:'channels',l:'Channel list',t:'channels',w:1}]},
+ {id:'stb',label:'Set-top box',fields:[
+  {k:'stb.title',l:'Heading',w:1},{k:'stb.lead',l:'Description',t:'area',w:1},
+  {k:'stb.specs',l:'Prices and specs',t:'list',item:'Item',fields:[{k:'label',l:'Label'},{k:'value',l:'Value'}],blank:{label:'',value:''}},
+  {k:'stb.note',l:'Small print',w:1}]},
+ {id:'steps',label:'Connection steps',fields:[
+  {k:'steps.title',l:'Heading',w:1},
+  {k:'steps.items',l:'Steps (in order)',t:'list',item:'Step',fields:[{k:'title',l:'Title'},{k:'text',l:'Description',t:'area',w:1}],blank:{title:'',text:''}}]},
+ {id:'faq',label:'FAQ',help:'The chatbot also uses these answers.',fields:[
+  {k:'faq',l:'Questions',t:'list',item:'Question',fields:[{k:'q',l:'Question',w:1},{k:'a',l:'Answer',t:'area',w:1}],blank:{q:'',a:''}}]},
+ {id:'chat',label:'Chatbot',help:'Plan cards and the new connection, complaint and billing forms save into your Google Sheet.',fields:[
+  {k:'chat.name',l:'Assistant name'},{k:'chat.greeting',l:'Greeting message',t:'area',w:1}]},
+ {id:'security',label:'Login & security'}
+];
+const getP=(o,p)=>p.split('.').reduce((a,k)=>a==null?a:a[k],o);
+function setP(o,p,v){const ks=p.split('.');let a=o;for(let i=0;i<ks.length-1;i++){if(a[ks[i]]==null)a[ks[i]]={};a=a[ks[i]]}a[ks[ks.length-1]]=v}
+const fid=p=>'adm-'+p.replace(/\./g,'-');
+function fieldHTML(f,path,val){
+  const id=fid(path),cls=f.w?' class="wide"':'',hint=f.hint?`<span class="hint">${esc(f.hint)}</span>`:'';
+  switch(f.t){
+   case 'area':return `<label${cls} for="${id}">${esc(f.l)}<textarea id="${id}" data-p="${path}" rows="3">${esc(val)}</textarea>${hint}</label>`;
+   case 'number':return `<label${cls} for="${id}">${esc(f.l)}<input id="${id}" data-p="${path}" data-t="number" type="number" min="0" value="${esc(val)}">${hint}</label>`;
+   case 'bool':return `<label class="chk${f.w?' wide':''}" for="${id}"><input id="${id}" data-p="${path}" data-t="bool" type="checkbox"${val?' checked':''}><span>${esc(f.l)}${hint?'<br>'+hint:''}</span></label>`;
+   case 'select':return `<label${cls} for="${id}">${esc(f.l)}<select id="${id}" data-p="${path}">${f.opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join('')}</select></label>`;
+   case 'lines':return `<label${cls} for="${id}">${esc(f.l)}<textarea id="${id}" data-p="${path}" data-t="lines" rows="4">${esc((val||[]).join('\n'))}</textarea>${hint}</label>`;
+   case 'channels':return `<label${cls} for="${id}">${esc(f.l)} <span class="hint">${(val||[]).length} channels</span><textarea id="${id}" data-p="${path}" data-t="channels" rows="18" style="font-family:var(--mono);font-size:.88rem">${esc((val||[]).map(c=>[c.lcn,c.name,c.genre].join(', ')+(c.hd?', HD':'')).join('\n'))}</textarea><span class="hint">Example: 302, Star Sports 1 HD, Sports, HD</span></label>`;
+   case 'image':return `<div class="wide"><label for="${id}">${esc(f.l)}</label><div class="imgfield" style="margin-top:6px"><span class="logo-mark"><img src="${esc(val)}" alt="Current logo"></span><input id="${id}" data-p="${path}" data-t="image" type="file" accept="image/png,image/jpeg,image/webp" style="max-width:320px"><span class="hint">PNG with a transparent background works best. Max 200 KB.</span></div></div>`;
+   case 'list':{
+     const arr=val||[];
+     return `<div class="fbox wide"><h3>${esc(f.l)}</h3>${arr.map((it,i)=>`<div class="litem"><div class="litem-head">${esc(f.item)} ${i+1}<span class="sp"></span>
+       <button type="button" class="mini" data-act="up" data-p="${path}" data-i="${i}"${i===0?' disabled':''} aria-label="Move up">↑</button>
+       <button type="button" class="mini" data-act="down" data-p="${path}" data-i="${i}"${i===arr.length-1?' disabled':''} aria-label="Move down">↓</button>
+       <button type="button" class="mini del" data-act="del" data-p="${path}" data-i="${i}">Remove</button></div>
+       <div class="fgrid">${f.fields.map(sf=>fieldHTML(sf,`${path}.${i}.${sf.k}`,it[sf.k])).join('')}</div></div>`).join('')}
+       <div><button type="button" class="btn btn-sm btn-line" data-act="add" data-p="${path}" data-blank='${esc(JSON.stringify(f.blank))}'>+ Add ${esc(f.item.toLowerCase())}</button></div></div>`}
+   default:return `<label${cls} for="${id}">${esc(f.l)}<input id="${id}" data-p="${path}" value="${esc(val)}">${hint}</label>`;
+  }
+}
+function parseChannels(txt){return txt.split('\n').map(l=>l.split(',').map(s=>s.trim())).filter(a=>a[0]&&a[1]).map(a=>({lcn:a[0],name:a[1],genre:a[2]||'Other',hd:/^hd$/i.test(a[3]||'')}))}
+const isDirty=()=>JSON.stringify(draft)!==JSON.stringify(DATA);
+function saveDraft(){if(isDirty())store.set('local',DRAFT_KEY,JSON.stringify(draft));else store.del('local',DRAFT_KEY);updStatus()}
+function updStatus(){const s=document.getElementById('admStatus');if(!s)return;const d=isDirty();s.className='adm-status'+(d?' dirty':'');s.innerHTML=`<i></i>${d?'Unpublished changes':'All changes published'}`;const p=document.getElementById('admPub');if(p)p.disabled=!d;const x=document.getElementById('admDiscard');if(x)x.disabled=!d}
+
+function loginHTML(err){
+  return `<div class="wrap login"><form class="card" id="loginForm" novalidate>
+   <a class="logo" href="#">${logoMark(DATA)}<span class="logo-text">${esc(DATA.brand.name)}<small style="color:var(--muted)">Website admin</small></span></a>
+   <h2 style="font-size:1.5rem">Sign in to edit the website</h2>
+   ${API_READY?'':'<div class="notice">This website is not connected to the Google Sheet yet. Add your Web app URL to <b>RVC_CONFIG.apiUrl</b> in index.html.</div>'}
+   <label for="lg-user">Username<input id="lg-user" autocomplete="username"></label>
+   <label for="lg-pass">Password<input id="lg-pass" type="password" autocomplete="current-password"></label>
+   ${err?`<div class="notice bad">${esc(err)}</div>`:''}
+   <button class="btn btn-primary" type="submit" id="lgBtn">Sign in</button>
+   <a href="#" class="hint" style="text-align:center">← Back to website</a>
+  </form></div>`;
+}
+async function doLogin(e){
+  e.preventDefault();
+  const u=document.getElementById('lg-user').value.trim(),p=document.getElementById('lg-pass').value;
+  const btn=document.getElementById('lgBtn');btn.disabled=true;btn.textContent='Checking…';
+  const fail=m=>{app.innerHTML=loginHTML(m);wireLogin();document.getElementById('lg-user').value=u};
+  let r;
+  try{r=await api({action:'login',username:u,password:p})}
+  catch(err){return fail(err.code==='not_connected'?'Sign-in needs the Google Sheet connection. Add the Web app URL to index.html first.':'Couldn’t reach the Google Sheet. Check your internet connection and the Web app URL, then try again.')}
+  if(!r||!r.ok)return fail(r&&r.error==='locked'?'Too many wrong attempts. Try again in 15 minutes.':'Wrong username or password.');
+  store.set('session',TOKEN_KEY,r.token);store.set('session',INFO_KEY,JSON.stringify({isDefault:r.isDefault,sheetUrl:r.sheetUrl}));
+  showAdmin();
+}
+function wireLogin(){document.getElementById('loginForm').addEventListener('submit',doLogin);document.getElementById('lg-user').focus()}
+function signedOut(){store.del('session',TOKEN_KEY);adminMsg=null;app.innerHTML=loginHTML('Your session ended. Sign in again; your changes are kept.');wireLogin()}
+
+function adminHTML(){
+  const sec=SCHEMA.find(s=>s.id===tab)||SCHEMA[0],inf=info();
+  return `<div class="adm-top"><div class="wrap">
+    <a class="logo" href="#">${logoMark(draft)}<span class="logo-text">Website admin<small>${esc(draft.brand.name)}</small></span></a>
+    <span class="adm-status" id="admStatus"></span>
+    <div class="actions">
+      ${inf.sheetUrl?`<a class="btn btn-sm btn-line" href="${esc(inf.sheetUrl)}" target="_blank" rel="noopener">Open requests sheet</a>`:''}
+      <button class="btn btn-sm btn-line" type="button" id="admDiscard">Discard changes</button>
+      <button class="btn btn-sm btn-line" type="button" id="admPreview">Preview</button>
+      <button class="btn btn-sm btn-primary" type="button" id="admPub">Publish</button>
+      <button class="btn btn-sm btn-line" type="button" id="admOut">Sign out</button>
+    </div></div></div>
+   <div class="wrap adm-body">
+    <nav class="adm-tabs" aria-label="Sections">${SCHEMA.map(s=>`<button type="button" data-tab="${s.id}" aria-current="${s.id===sec.id}">${esc(s.label)}</button>`).join('')}</nav>
+    <div class="adm-panel" id="admPanel">
+      ${adminMsg?`<div class="notice ${adminMsg.kind}">${esc(adminMsg.text)}</div>`:''}
+      ${inf.isDefault?`<div class="notice">You are using the default password. Change it under <b>Login &amp; security</b>.</div>`:''}
+      <h2>${esc(sec.label)}</h2>${sec.help?`<p class="help">${esc(sec.help)}</p>`:''}
+      ${sec.id==='security'?securityHTML():`<div class="fbox"><div class="fgrid">${sec.fields.map(f=>fieldHTML(f,f.k,getP(draft,f.k))).join('')}</div></div>`}
+    </div></div>`;
+}
+function securityHTML(){
+  return `<form class="fbox" id="credForm" novalidate>
+    <h3>Change admin username and password</h3>
+    <p class="hint">This takes effect straight away and does not need publishing. The password is stored as a hash inside your Google Apps Script, not in the website.</p>
+    <div class="fgrid">
+      <label class="wide" for="cr-cur">Current password<input id="cr-cur" type="password" autocomplete="current-password"></label>
+      <label for="cr-user">New username<input id="cr-user" autocomplete="username"></label>
+      <label for="cr-pass">New password<input id="cr-pass" type="password" autocomplete="new-password"><span class="hint">At least 8 characters</span></label>
+      <label for="cr-pass2">Repeat new password<input id="cr-pass2" type="password" autocomplete="new-password"></label>
+    </div>
+    <div id="crMsg"></div>
+    <div><button class="btn btn-primary" type="submit">Save login</button></div>
+  </form>`;
+}
+async function saveCreds(e){
+  e.preventDefault();
+  const v=id=>document.getElementById(id).value;const msg=(k,t)=>document.getElementById('crMsg').innerHTML=`<div class="notice ${k}">${esc(t)}</div>`;
+  const nu=v('cr-user').trim(),np=v('cr-pass');
+  if(!nu)return msg('bad','Enter a new username.');
+  if(np.length<8)return msg('bad','The new password needs at least 8 characters.');
+  if(np!==v('cr-pass2'))return msg('bad','The two new passwords don’t match.');
+  let r;try{r=await api({action:'changePassword',token:token(),current:v('cr-cur'),username:nu,password:np})}catch(err){return msg('bad','Couldn’t reach the Google Sheet. Try again.')}
+  if(r&&r.error==='signed_out')return signedOut();
+  if(!r||!r.ok)return msg('bad',r&&r.error==='wrong_current'?'The current password is wrong.':'Couldn’t save the new login. Try again.');
+  const inf=info();inf.isDefault=false;store.set('session',INFO_KEY,JSON.stringify(inf));
+  e.target.reset();msg('ok','Login saved. Use the new username and password next time.');
+}
+function wireAdmin(){
+  updStatus();
+  document.querySelector('.adm-tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;tab=b.dataset.tab;adminMsg=null;renderAdmin();window.scrollTo(0,0)});
+  document.getElementById('admPreview').onclick=()=>showSite(draft,true);
+  document.getElementById('admPub').onclick=publish;
+  document.getElementById('admDiscard').onclick=()=>{draft=clone(DATA);store.del('local',DRAFT_KEY);adminMsg={kind:'ok',text:'Changes discarded. The editor shows the published website again.'};renderAdmin()};
+  document.getElementById('admOut').onclick=()=>{store.del('session',TOKEN_KEY);store.del('session',INFO_KEY);location.hash=''};
+  const panel=document.getElementById('admPanel');
+  const cf=document.getElementById('credForm');if(cf)cf.addEventListener('submit',saveCreds);
+  panel.addEventListener('input',e=>{
+    const el=e.target,p=el.dataset.p;if(!p||el.dataset.t==='image')return;
+    const t=el.dataset.t;
+    const v=t==='bool'?el.checked:t==='number'?(Number(el.value)||0):t==='lines'?el.value.split('\n').map(s=>s.trim()).filter(Boolean):t==='channels'?parseChannels(el.value):el.value;
+    setP(draft,p,v);saveDraft();
+  });
+  panel.addEventListener('change',e=>{
+    const el=e.target;if(el.dataset.t!=='image'||!el.files[0])return;
+    const f=el.files[0];
+    if(f.size>200*1024){adminMsg={kind:'bad',text:'That image is larger than 200 KB. Use a smaller file.'};renderAdmin();return}
+    const r=new FileReader();r.onload=()=>{setP(draft,el.dataset.p,r.result);saveDraft();adminMsg=null;renderAdmin()};r.readAsDataURL(f);
+  });
+  panel.addEventListener('click',e=>{
+    const b=e.target.closest('[data-act]');if(!b)return;
+    const arr=getP(draft,b.dataset.p)||[];const i=+b.dataset.i;
+    if(b.dataset.act==='add')arr.push(JSON.parse(b.dataset.blank));
+    if(b.dataset.act==='del')arr.splice(i,1);
+    if(b.dataset.act==='up'&&i>0)[arr[i-1],arr[i]]=[arr[i],arr[i-1]];
+    if(b.dataset.act==='down'&&i<arr.length-1)[arr[i+1],arr[i]]=[arr[i],arr[i+1]];
+    setP(draft,b.dataset.p,arr);saveDraft();const y=window.scrollY;renderAdmin();window.scrollTo(0,y);
+  });
+}
+function renderAdmin(){app.innerHTML=adminHTML();wireAdmin()}
+function showAdmin(){
+  mode='admin';timers.forEach(clearInterval);timers=[];
+  document.getElementById('chat').hidden=true;if(Chat.open)Chat.toggle(false);
+  document.title='Admin · '+DATA.brand.name;
+  if(!draft){let s=null;try{s=JSON.parse(store.get('local',DRAFT_KEY)||'null')}catch(e){}draft=s?withDefaults(s,DEFAULTS):clone(DATA)}
+  if(!token()){app.innerHTML=loginHTML('');wireLogin();window.scrollTo(0,0);return}
+  renderAdmin();window.scrollTo(0,0);
+}
+async function publish(){
+  const btns=[...document.querySelectorAll('#admPub,#pvPub')];btns.forEach(b=>{b.disabled=true;b.textContent='Publishing…'});
+  let r;
+  try{r=await api({action:'saveContent',token:token(),content:draft})}
+  catch(e){adminMsg={kind:'bad',text:'Couldn’t reach the Google Sheet, so nothing was published. Check your connection and try again.'};return showAdmin()}
+  if(r&&r.error==='signed_out'){mode='admin';return signedOut()}
+  if(!r||!r.ok){adminMsg={kind:'bad',text:r&&r.error==='too_large'?'The website content is too large. Use a smaller logo image.':'Publishing didn’t go through. Try again.'};return showAdmin()}
+  DATA=clone(draft);store.set('local',CACHE_KEY,JSON.stringify(DATA));store.del('local',DRAFT_KEY);
+  adminMsg={kind:'ok',text:'Published. Visitors see the changes the next time they open or refresh the website.'};
+  showAdmin();
+}
+
+/* ---------- Router ---------- */
+function route(){
+  if(location.hash==='#admin'){showAdmin();return}
+  if(mode!=='site'&&mode!=='preview'){showSite(DATA,false);if(location.hash.length>1){const t=document.getElementById(location.hash.slice(1));if(t)t.scrollIntoView()}else window.scrollTo(0,0)}
+}
+Chat.mount();
+window.addEventListener('hashchange',route);
+route();
+// Load the latest published content from the Google Sheet.
+api().then(r=>{
+  if(!r||!r.ok||!r.content)return;
+  const fresh=withDefaults(r.content,DEFAULTS);
+  if(JSON.stringify(fresh)===JSON.stringify(DATA))return;
+  DATA=fresh;store.set('local',CACHE_KEY,JSON.stringify(fresh));
+  if(mode==='site'){const y=window.scrollY;showSite(DATA,false);window.scrollTo(0,y)}
+  if(mode==='admin'&&draft&&!store.get('local',DRAFT_KEY)){draft=clone(DATA);if(token())renderAdmin()}
+}).catch(()=>{});
+})();
+</script>
+
+</body>
+</html>
